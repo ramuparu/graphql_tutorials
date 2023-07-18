@@ -3,7 +3,7 @@ const {buildSchema} = require('graphql')
 const {graphqlHTTP} = require('express-graphql')
 
 const app = express()
-
+let myMessage = "iam the world"
 const schema = buildSchema(`
 type Todo {
     userId:Int
@@ -22,6 +22,12 @@ type Query {
     userData:User
     getalluserdata:[User]
     getexternaltodos : [Todo]
+    getMsg : String
+}
+
+
+type Mutation {
+    setMessage(value:String) : String
 }
 `)
 
@@ -64,7 +70,12 @@ const root = {
         const data = await response.json()
         const userInfo = await data
         return userInfo
-    }
+    },
+    setMessage : ({value})=>{
+        myMessage = value
+        return myMessage
+    },
+    getMsg : ()=> myMessage
 }
 
 app.use('/graphql', graphqlHTTP({
