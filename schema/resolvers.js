@@ -14,7 +14,7 @@ const resolvers = {
             return movieData
        },
         movie : (parent,{movieName})=>{
-             const movieInfo = _.find(movieData,{name:movieName})
+             const movieInfo = _.find(movieData,(movie)=>movie.name.toUpperCase() === movieName.toUpperCase())
              return movieInfo
         }
     },
